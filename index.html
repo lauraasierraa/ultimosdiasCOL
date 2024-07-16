@@ -3,180 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encuesta con Descarga de Resultados</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <title>Cuenta regresiva hasta el fin del mandato del Presidente Petro</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('petro.jpg');
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('petro.jpg'); /* Cambiar el nombre de la imagen de fondo */
             background-size: cover;
-            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white; /* Cambiar el color del texto a blanco para mejor visibilidad */
         }
-        .countdown-container, .vote-container {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            margin: 20px auto;
-            border-radius: 10px;
+        .countdown {
             text-align: center;
-            width: 80%;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 90%; /* Ancho del 90% para ajustar el tamaño */
+            max-width: 1000px; /* Máximo ancho aumentado */
         }
-        h1, h2 {
-            color: black;
+        .countdown h1 {
             font-size: 2em;
+            margin: 0;
+            padding: 0;
+            color: black; /* Color del texto negro */
         }
         table {
-            margin: 0 auto;
+            font-size: 0.9em; /* Tamaño de fuente ligeramente reducido */
+            margin-top: 20px;
             border-collapse: collapse;
+            color: black; /* Color del texto negro */
+            width: 100%; /* Ancho completo de la tabla */
         }
-        td {
-            padding: 10px 20px;
-            font-size: 1.2em;
-            color: black;
+        table, th, td {
+            border: 1px solid black; /* Borde negro para las celdas */
+            padding: 10px;
         }
-        button {
-            background-color: #007BFF;
+        .survey {
+            margin-top: 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            width: 90%; /* Ancho del 90% para ajustar el tamaño */
+            max-width: 1000px; /* Máximo ancho aumentado */
+            position: relative; /* Posición relativa para alinear mensajes */
+        }
+        .survey h2 {
+            color: black; /* Color del texto negro */
+        }
+        .survey button {
+            background-color: #4CAF50; /* Verde */
             color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1em;
+            padding: 15px 30px; /* Aumentar el tamaño del botón */
+            border: 2px solid #4CAF50; /* Borde más grueso */
             cursor: pointer;
             border-radius: 5px;
-            margin: 10px;
-        }
-        #thank-you-message, #already-voted-message {
-            display: none;
-            color: black;
+            margin: 10px; /* Ajustar el margen horizontal y vertical */
             font-size: 1.2em;
+            width: 200px; /* Ancho de los botones */
         }
-        .animation {
+        .survey button:hover {
+            background-color: #45a049; /* Verde más oscuro al pasar el mouse */
+        }
+        .survey .response-box {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start; /* Alinear las respuestas arriba */
+            margin-top: 10px; /* Espacio superior reducido */
+        }
+        .survey .response-box .response {
+            text-align: center; /* Alinear texto al centro */
+            width: 100%; /* Ancho completo */
+        }
+        .survey .response-box .response#yes {
+            color: #4CAF50; /* Color verde para respuestas Sí */
+        }
+        .survey .response-box .response#no {
+            color: #F44336; /* Color rojo para respuestas No */
+        }
+        .ad {
+            width: 100%;
+            max-width: 1000px; /* Ajustar el ancho máximo */
+            margin: 20px 0;
+        }
+        .message {
             position: absolute;
-            width: 400px;
-            display: none;
-        }
-        #angel-animation {
-            top: 20%;
+            bottom: 10px;
             left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        #devil-animation {
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: black; /* Color del texto negro */
+            display: none; /* Ocultar inicialmente */
         }
     </style>
 </head>
 <body>
-    <div class="countdown-container">
-        <h1>Cuenta regresiva hasta el fin del mandato del Presidente Petro</h1>
+    <div class="countdown">
+        <h1>Cuenta regresiva hasta el fin del mandato del Presidente Petro:</h1>
         <table>
             <tr>
-                <td>Años:</td>
-                <td id="years">0</td>
+                <th>Años</th>
+                <th>Meses</th>
+                <th>Días</th>
+                <th>Horas</th>
+                <th>Minutos</th>
+                <th>Segundos</th>
             </tr>
             <tr>
-                <td>Meses:</td>
-                <td id="months">0</td>
-            </tr>
-            <tr>
-                <td>Días:</td>
-                <td id="days">0</td>
-            </tr>
-            <tr>
-                <td>Horas:</td>
-                <td id="hours">0</td>
-            </tr>
-            <tr>
-                <td>Minutos:</td>
-                <td id="minutes">0</td>
-            </tr>
-            <tr>
-                <td>Segundos:</td>
-                <td id="seconds">0</td>
+                <td id="years"></td>
+                <td id="months"></td>
+                <td id="days"></td>
+                <td id="hours"></td>
+                <td id="minutes"></td>
+                <td id="seconds"></td>
             </tr>
         </table>
     </div>
 
-    <div class="vote-container">
+    <div class="survey">
         <h2>¿Te gusta el mandato del Presidente Petro?</h2>
-        <button id="btn-yes" onclick="vote('yes')">Sí</button>
-        <button id="btn-no" onclick="vote('no')">No</button>
-        <p id="yes">Respuestas = 0</p>
-        <p id="no">Respuestas = 0</p>
-        <p id="thank-you-message">Gracias por votar.</p>
-        <p id="already-voted-message">Ya votaste y solamente puedes votar una vez.</p>
+        <div class="response-box">
+            <button id="btn-yes" onclick="vote('yes')">Sí</button>
+            <button id="btn-no" onclick="vote('no')">No</button>
+        </div>
+        <div class="response-box">
+            <div class="response" id="yes">Respuestas = <span>0</span></div>
+            <div class="response" id="no">Respuestas = <span>0</span></div>
+        </div>
+
+        <!-- Mensaje de gracias por votar -->
+        <div class="message" id="thank-you-message">Gracias por votar</div>
+
+        <!-- Mensaje de ya votaste -->
+        <div class="message" id="already-voted-message">Ya votaste y solamente puedes votar una vez</div>
     </div>
 
-    <img id="angel-animation" class="animation" src="angel.jpg" alt="Ángel">
-    <img id="devil-animation" class="animation" src="devil.jpg" alt="Diablo">
+    <!-- Google AdSense Ad -->
+    <div class="ad">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="YYYYYYYYYY"
+             data-ad-format="auto"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 
     <script>
-        let hasVoted = false;
-        let yesVotes = 0;
-        let noVotes = 0;
+        // Establecer la fecha del fin del mandato del Presidente Petro
+        const endDate = new Date('August 7, 2026 00:00:00').getTime();
 
-        function vote(option) {
-            if (hasVoted) {
-                showAlreadyVotedMessage();
-                return;
+        // Función para actualizar la cuenta regresiva
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = endDate - now;
+
+            // Calcular el tiempo restante
+            const years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
+            const months = Math.floor((distance % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+            const days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Mostrar el resultado
+            document.getElementById('years').innerHTML = years;
+            document.getElementById('months').innerHTML = months;
+            document.getElementById('days').innerHTML = days;
+            document.getElementById('hours').innerHTML = hours;
+            document.getElementById('minutes').innerHTML = minutes;
+            document.getElementById('seconds').innerHTML = seconds;
+
+            // Si la cuenta regresiva ha terminado, mostrar un mensaje
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('years').innerHTML = "";
+                document.getElementById('months').innerHTML = "";
+                document.getElementById('days').innerHTML = "";
+                document.getElementById('hours').innerHTML = "";
+                document.getElementById('minutes').innerHTML = "";
+                document.getElementById('seconds').innerHTML = "El mandato del Presidente Petro ha terminado.";
             }
+        }
 
-            if (option === 'yes') {
-                yesVotes++;
-                document.getElementById('yes').innerText = `Respuestas = ${yesVotes}`;
-                showAnimation('angel-animation');
-            } else if (option === 'no') {
-                noVotes++;
-                document.getElementById('no').innerText = `Respuestas = ${noVotes}`;
-                showAnimation('devil-animation');
+        // Actualizar la cuenta regresiva cada segundo
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Inicializar los votos desde localStorage o establecer en 0 si no hay valores guardados
+        let voted = localStorage.getItem('voted') === 'true';
+        let yesCount = parseInt(localStorage.getItem('yesCount')) || 0;
+        let noCount = parseInt(localStorage.getItem('noCount')) || 0;
+
+        // Actualizar la visualización de los votos al cargar la página
+        document.getElementById('yes').querySelector('span').textContent = yesCount;
+        document.getElementById('no').querySelector('span').textContent = noCount;
+
+        // Función para votar
+        function vote(choice) {
+            if (!voted) {
+                if (choice === 'yes') {
+                    yesCount++;
+                    document.getElementById('yes').querySelector('span').textContent = yesCount;
+                    localStorage.setItem('yesCount', yesCount);
+                } else if (choice === 'no') {
+                    noCount++;
+                    document.getElementById('no').querySelector('span').textContent = noCount;
+                    localStorage.setItem('noCount', noCount);
+                }
+                localStorage.setItem('voted', 'true');
+                voted = true; // Marcar como que ya ha votado
+
+                // Mostrar mensaje de gracias por votar
+                document.getElementById('thank-you-message').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('thank-you-message').style.display = 'none';
+                }, 8000); // Ocultar mensaje después de 8 segundos
+            } else {
+                // Mostrar mensaje de ya votaste
+                document.getElementById('already-voted-message').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('already-voted-message').style.display = 'none';
+                }, 8000); // Ocultar mensaje después de 8 segundos
             }
-
-            hasVoted = true;
-            showThankYouMessage();
-        }
-
-        function showAnimation(id) {
-            const animation = document.getElementById(id);
-            animation.style.display = 'block';
-            setTimeout(() => {
-                animation.style.display = 'none';
-            }, 2000);
-        }
-
-        function showThankYouMessage() {
-            const message = document.getElementById('thank-you-message');
-            message.style.display = 'block';
-            setTimeout(() => {
-                message.style.display = 'none';
-            }, 8000);
-        }
-
-        function showAlreadyVotedMessage() {
-            const message = document.getElementById('already-voted-message');
-            message.style.display = 'block';
-            setTimeout(() => {
-                message.style.display = 'none';
-            }, 8000);
-        }
-
-        function guardarArchivo() {
-            const contenido = `Sí: ${yesVotes}\nNo: ${noVotes}`;
-            const blob = new Blob([contenido], { type: 'text/plain' });
-            saveAs(blob, "resultados-encuesta.txt");
-        }
-
-        document.body.onload = function() {
-            const saveButton = document.createElement('button');
-            saveButton.textContent = 'Guardar Resultados';
-            saveButton.onclick = guardarArchivo;
-            saveButton.style.display = 'block';
-            saveButton.style.margin = '20px auto';
-            saveButton.style.padding = '10px 20px';
-            saveButton.style.backgroundColor = '#007BFF';
-            saveButton.style.color = 'white';
-            saveButton.style.border = 'none';
-            saveButton.style.borderRadius = '5px';
-            saveButton.style.cursor = 'pointer';
-            document.body.appendChild(saveButton);
         }
     </script>
 </body>
