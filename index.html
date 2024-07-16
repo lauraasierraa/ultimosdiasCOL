@@ -19,12 +19,12 @@
             background-repeat: no-repeat;
             color: white; /* Cambiar el color del texto a blanco para mejor visibilidad */
         }
-        .countdown {
+        .countdown, .survey {
             text-align: center;
             background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             margin-bottom: 20px;
             display: flex;
             flex-direction: column;
@@ -33,10 +33,7 @@
             width: 90%; /* Ancho del 90% para ajustar el tamaño */
             max-width: 1000px; /* Máximo ancho aumentado */
         }
-        .countdown h1 {
-            font-size: 2em;
-            margin: 0;
-            padding: 0;
+        .countdown h1, .survey h2 {
             color: black; /* Color del texto negro */
         }
         table {
@@ -50,25 +47,11 @@
             border: 1px solid black; /* Borde negro para las celdas */
             padding: 10px;
         }
-        .survey {
-            margin-top: 20px;
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            width: 90%; /* Ancho del 90% para ajustar el tamaño */
-            max-width: 1000px; /* Máximo ancho aumentado */
-            position: relative; /* Posición relativa para alinear mensajes */
-        }
-        .survey h2 {
-            color: black; /* Color del texto negro */
-        }
         .survey button {
-            background-color: #4CAF50; /* Verde */
+            background-color: #007BFF; /* Azul */
             color: white;
             padding: 15px 30px; /* Aumentar el tamaño del botón */
-            border: 2px solid #4CAF50; /* Borde más grueso */
+            border: 0.1px solid #007BFF; /* Borde más grueso */
             cursor: pointer;
             border-radius: 5px;
             margin: 10px; /* Ajustar el margen horizontal y vertical */
@@ -76,28 +59,24 @@
             width: 200px; /* Ancho de los botones */
         }
         .survey button:hover {
-            background-color: #45a049; /* Verde más oscuro al pasar el mouse */
+            background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
         }
         .survey .response-box {
             display: flex;
             justify-content: space-around;
             align-items: flex-start; /* Alinear las respuestas arriba */
             margin-top: 10px; /* Espacio superior reducido */
+            width: 100%;
         }
         .survey .response-box .response {
             text-align: center; /* Alinear texto al centro */
             width: 100%; /* Ancho completo */
         }
         .survey .response-box .response#yes {
-            color: #4CAF50; /* Color verde para respuestas Sí */
+            color: black; /* Color del texto negro */
         }
         .survey .response-box .response#no {
-            color: #F44336; /* Color rojo para respuestas No */
-        }
-        .ad {
-            width: 100%;
-            max-width: 1000px; /* Ajustar el ancho máximo */
-            margin: 20px 0;
+            color: black; /* Color del texto negro */
         }
         .message {
             position: absolute;
@@ -110,6 +89,20 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             color: black; /* Color del texto negro */
             display: none; /* Ocultar inicialmente */
+        }
+        .animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px; /* Tamaño mayor para las imágenes */
+            height: 400px; /* Tamaño mayor para las imágenes */
+            display: none; /* Ocultar inicialmente */
+        }
+        .animation img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -154,16 +147,14 @@
         <div class="message" id="already-voted-message">Ya votaste y solamente puedes votar una vez</div>
     </div>
 
-    <!-- Google AdSense Ad -->
-    <div class="ad">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-             data-ad-slot="YYYYYYYYYY"
-             data-ad-format="auto"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+    <!-- Animación del ángel -->
+    <div class="animation" id="angel-animation">
+        <img src="angel.jpg" alt="Ángel">
+    </div>
+
+    <!-- Animación del diablo -->
+    <div class="animation" id="devil-animation">
+        <img src="devil.jpg" alt="Diablo">
     </div>
 
     <script>
@@ -183,7 +174,7 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Mostrar el resultado
+            // Mostrar el tiempo en los elementos correspondientes
             document.getElementById('years').innerHTML = years;
             document.getElementById('months').innerHTML = months;
             document.getElementById('days').innerHTML = days;
@@ -194,11 +185,11 @@
             // Si la cuenta regresiva ha terminado, mostrar un mensaje
             if (distance < 0) {
                 clearInterval(countdownInterval);
-                document.getElementById('years').innerHTML = "";
-                document.getElementById('months').innerHTML = "";
-                document.getElementById('days').innerHTML = "";
-                document.getElementById('hours').innerHTML = "";
-                document.getElementById('minutes').innerHTML = "";
+                document.getElementById('years').innerHTML = "0";
+                document.getElementById('months').innerHTML = "0";
+                document.getElementById('days').innerHTML = "0";
+                document.getElementById('hours').innerHTML = "0";
+                document.getElementById('minutes').innerHTML = "0";
                 document.getElementById('seconds').innerHTML = "El mandato del Presidente Petro ha terminado.";
             }
         }
@@ -219,13 +210,11 @@
         function vote(choice) {
             if (!voted) {
                 if (choice === 'yes') {
-                    yesCount++;
-                    document.getElementById('yes').querySelector('span').textContent = yesCount;
-                    localStorage.setItem('yesCount', yesCount);
+                    // Mostrar la animación del ángel
+                    showAnimation('angel-animation');
                 } else if (choice === 'no') {
-                    noCount++;
-                    document.getElementById('no').querySelector('span').textContent = noCount;
-                    localStorage.setItem('noCount', noCount);
+                    // Mostrar la animación del diablo
+                    showAnimation('devil-animation');
                 }
                 localStorage.setItem('voted', 'true');
                 voted = true; // Marcar como que ya ha votado
@@ -236,12 +225,28 @@
                     document.getElementById('thank-you-message').style.display = 'none';
                 }, 8000); // Ocultar mensaje después de 8 segundos
             } else {
+                // Mostrar la animación correspondiente sin sumar votos
+                if (choice === 'yes') {
+                    showAnimation('angel-animation');
+                } else if (choice === 'no') {
+                    showAnimation('devil-animation');
+                }
+
                 // Mostrar mensaje de ya votaste
                 document.getElementById('already-voted-message').style.display = 'block';
                 setTimeout(() => {
                     document.getElementById('already-voted-message').style.display = 'none';
                 }, 8000); // Ocultar mensaje después de 8 segundos
             }
+        }
+
+        // Función para mostrar animaciones
+        function showAnimation(id) {
+            const animation = document.getElementById(id);
+            animation.style.display = 'block';
+            setTimeout(() => {
+                animation.style.display = 'none';
+            }, 3000); // Ocultar la animación después de 3 segundos
         }
     </script>
 </body>
