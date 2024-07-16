@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta regresiva hasta el fin del mandato del Presidente Petro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('petro.jpg'); /* Cambiar el nombre de la imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white; /* Cambiar el color del texto a blanco para mejor visibilidad */
+        }
+        .countdown {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 90%; /* Ancho del 90% para ajustar el tamaño */
+            max-width: 1000px; /* Máximo ancho aumentado */
+        }
+        .countdown h1 {
+            font-size: 2em;
+            margin: 0;
+            padding: 0;
+            color: black; /* Color del texto negro */
+        }
+        table {
+            font-size: 0.9em; /* Tamaño de fuente ligeramente reducido */
+            margin-top: 20px;
+            border-collapse: collapse;
+            color: black; /* Color del texto negro */
+            width: 100%; /* Ancho completo de la tabla */
+        }
+        table, th, td {
+            border: 1px solid black; /* Borde negro para las celdas */
+            padding: 10px;
+        }
+        .survey {
+            margin-top: 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            width: 90%; /* Ancho del 90% para ajustar el tamaño */
+            max-width: 1000px; /* Máximo ancho aumentado */
+            position: relative; /* Posición relativa para alinear mensajes */
+        }
+        .survey h2 {
+            color: black; /* Color del texto negro */
+        }
+        .survey button {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+            padding: 15px 30px; /* Aumentar el tamaño del botón */
+            border: 2px solid #4CAF50; /* Borde más grueso */
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px; /* Ajustar el margen horizontal y vertical */
+            font-size: 1.2em;
+            width: 200px; /* Ancho de los botones */
+        }
+        .survey button:hover {
+            background-color: #45a049; /* Verde más oscuro al pasar el mouse */
+        }
+        .survey .response-box {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start; /* Alinear las respuestas arriba */
+            margin-top: 10px; /* Espacio superior reducido */
+        }
+        .survey .response-box .response {
+            text-align: center; /* Alinear texto al centro */
+            width: 100%; /* Ancho completo */
+        }
+        .survey .response-box .response#yes {
+            color: #4CAF50; /* Color verde para respuestas Sí */
+        }
+        .survey .response-box .response#no {
+            color: #F44336; /* Color rojo para respuestas No */
+        }
+        .ad {
+            width: 100%;
+            max-width: 1000px; /* Ajustar el ancho máximo */
+            margin: 20px 0;
+        }
+        .message {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: black; /* Color del texto negro */
+            display: none; /* Ocultar inicialmente */
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown">
+        <h1>Cuenta regresiva hasta el fin del mandato del Presidente Petro:</h1>
+        <table>
+            <tr>
+                <th>Años</th>
+                <th>Meses</th>
+                <th>Días</th>
+                <th>Horas</th>
+                <th>Minutos</th>
+                <th>Segundos</th>
+            </tr>
+            <tr>
+                <td id="years"></td>
+                <td id="months"></td>
+                <td id="days"></td>
+                <td id="hours"></td>
+                <td id="minutes"></td>
+                <td id="seconds"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="survey">
+        <h2>¿Te gusta el mandato del Presidente Petro?</h2>
+        <div class="response-box">
+            <button id="btn-yes" onclick="vote('yes')">Sí</button>
+            <button id="btn-no" onclick="vote('no')">No</button>
+        </div>
+        <div class="response-box">
+            <div class="response" id="yes">Respuestas = <span>0</span></div>
+            <div class="response" id="no">Respuestas = <span>0</span></div>
+        </div>
+
+        <!-- Mensaje de gracias por votar -->
+        <div class="message" id="thank-you-message">Gracias por votar</div>
+
+        <!-- Mensaje de ya votaste -->
+        <div class="message" id="already-voted-message">Ya votaste y solamente puedes votar una vez</div>
+    </div>
+
+    <!-- Google AdSense Ad -->
+    <div class="ad">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="YYYYYYYYYY"
+             data-ad-format="auto"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <script>
+        // Establecer la fecha del fin del mandato del Presidente Petro
+        const endDate = new Date('August 7, 2026 00:00:00').getTime();
+
+        // Función para actualizar la cuenta regresiva
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = endDate - now;
+
+            // Calcular el tiempo restante
+            const years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
+            const months = Math.floor((distance % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+            const days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Mostrar el resultado
+            document.getElementById('years').innerHTML = years;
+            document.getElementById('months').innerHTML = months;
+            document.getElementById('days').innerHTML = days;
+            document.getElementById('hours').innerHTML = hours;
+            document.getElementById('minutes').innerHTML = minutes;
+            document.getElementById('seconds').innerHTML = seconds;
+
+            // Si la cuenta regresiva ha terminado, mostrar un mensaje
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('years').innerHTML = "";
+                document.getElementById('months').innerHTML = "";
+                document.getElementById('days').innerHTML = "";
+                document.getElementById('hours').innerHTML = "";
+                document.getElementById('minutes').innerHTML = "";
+                document.getElementById('seconds').innerHTML = "El mandato del Presidente Petro ha terminado.";
+            }
+        }
+
+        // Actualizar la cuenta regresiva cada segundo
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Inicializar los votos desde localStorage o establecer en 0 si no hay valores guardados
+        let voted = localStorage.getItem('voted') === 'true';
+        let yesCount = parseInt(localStorage.getItem('yesCount')) || 0;
+        let noCount = parseInt(localStorage.getItem('noCount')) || 0;
+
+        // Actualizar la visualización de los votos al cargar la página
+        document.getElementById('yes').querySelector('span').textContent = yesCount;
+        document.getElementById('no').querySelector('span').textContent = noCount;
+
+        // Función para votar
+        function vote(choice) {
+            if (!voted) {
+                if (choice === 'yes') {
+                    yesCount++;
+                    document.getElementById('yes').querySelector('span').textContent = yesCount;
+                    localStorage.setItem('yesCount', yesCount);
+                } else if (choice === 'no') {
+                    noCount++;
+                    document.getElementById('no').querySelector('span').textContent = noCount;
+                    localStorage.setItem('noCount', noCount);
+                }
+                localStorage.setItem('voted', 'true');
+                voted = true; // Marcar como que ya ha votado
+
+                // Mostrar mensaje de gracias por votar
+                document.getElementById('thank-you-message').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('thank-you-message').style.display = 'none';
+                }, 8000); // Ocultar mensaje después de 8 segundos
+            } else {
+                // Mostrar mensaje de ya votaste
+                document.getElementById('already-voted-message').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('already-voted-message').style.display = 'none';
+                }, 8000); // Ocultar mensaje después de 8 segundos
+            }
+        }
+    </script>
+</body>
+</html>

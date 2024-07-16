@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('petro.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.countdown-container, .vote-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%; /* Cambiar el ancho aquí para hacerlo más amplio */
+}
+
+h1 {
+    color: black;
+    font-size: 2em;
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: black;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+#thank-you-message, #already-voted-message {
+    display: none;
+    color: black;
+    font-size: 1.2em;
+}
+
+.animation {
+    position: absolute;
+    width: 400px;
+    display: none;
+}
+
+#angel-animation {
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#devil-animation {
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
